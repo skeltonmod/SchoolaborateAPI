@@ -20,10 +20,10 @@ jobs:
         ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
     # Use the version of Node.js you need
-    - name: Use Node.js 10.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 16.x
     
     # If you need node dependencies and to build some js/css
     - name: npm install and build
@@ -33,7 +33,7 @@ jobs:
 
     # If so, you can then remove the source assets folder
     - name: Remove the source assets files
-      run: 'rm -Rf <your-assets-source-folder>'
+      run: 'rm -Rf public/'
 
     - name: Configure Git
       # The local git needs a user to be configured to commit & push
