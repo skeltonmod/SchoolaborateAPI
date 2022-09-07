@@ -31,10 +31,6 @@ jobs:
         npm ci
         npm run production
 
-    # If so, you can then remove the source assets folder
-    - name: Remove the source assets files
-      run: 'rm -Rf public'
-
     - name: Configure Git
       # The local git needs a user to be configured to commit & push
       run: |
