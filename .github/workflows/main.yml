@@ -24,6 +24,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+    
+    # If you need node dependencies and to build some js/css
+    - name: npm install and build
+      run: |
+        npm ci
+        npm run prod
 
     # If so, you can then remove the source assets folder
     - name: Remove the source assets files
