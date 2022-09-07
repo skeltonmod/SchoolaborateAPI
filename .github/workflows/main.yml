@@ -7,6 +7,7 @@ jobs:
       GIT_USERNAME: skeltonmod
       REPO_URL: schoolaborate.864xju3e3vylxu2a@deploy.us1.frbit.com:schoolaborate.git
       REPO_BRANCH: main
+      SSH_PRIVATE_KEY: ${{secrets.DEPLOY_KEY}}
 
     runs-on: ubuntu-latest
 
@@ -17,7 +18,7 @@ jobs:
     # This will automatically set up ssh with our private key
     - uses: webfactory/ssh-agent@v0.5.4
       with:
-        ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+        ssh-private-key: $SSH_PRIVATE_KEY
 
     # Use the version of Node.js you need
     - name: Use Node.js 10.x
