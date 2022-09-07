@@ -17,7 +17,7 @@ jobs:
     # This will automatically set up ssh with our private key
     - uses: webfactory/ssh-agent@v0.5.4
       with:
-        ssh-private-key: '${{ secrets.SSH_PRIVATE_KEY }}'
+        ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
     # Use the version of Node.js you need
     - name: Use Node.js 10.x
