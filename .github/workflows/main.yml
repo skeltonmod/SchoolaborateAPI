@@ -1,0 +1,44 @@
+name: Deploy through rsync
+on: [push]
+jobs:
+  build-and-deploy:
+    env:
+      DESTINATION: "schoolaborate@deploy.us1.frbit.com"
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # This will pull the github repository to the current pipeline
+    - uses: actions/checkout@v1
+
+    # This will automatically set up ssh with our private key
+    - uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+    # We decide to use Node.js 10 here (could use 8, 10, or 12)
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-dev --no-progress --no-suggest --optimize-autoloader --ignore-platform-reqs
+
+    # If you need node dependencies and to build some js/css
+    - name: npm install and build
+      run: |
+        npm ci
+        npm run <your-build-script>
+
+    # If so, you can then remove the source assets folder
+    - name: Remove the source assets files
+      run: 'rm -Rf <your-assets-source-folder>'
+
+    - name: deploy
+      # The StrictHostKeyChecking option avoids a failure when the client does not know the SSH Host already
+      run: |
+        rsync -azh -e 'ssh -o StrictHostKeyChecking=no' ./ --rsync-path='rsync' $DESTINATION:~/
