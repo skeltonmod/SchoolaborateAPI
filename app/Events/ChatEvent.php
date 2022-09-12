@@ -26,11 +26,11 @@ class ChatEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['chat-channel'];
+        return ['my-channel'];
     }
 
     public function broadcastAs()
     {
-        return 'chat-event';
+        return 'my-event';
     }
 }

@@ -52,6 +52,7 @@ class SubjectController extends Controller
         $subject = Subject::create([
             'subject_name' => $request->subject_name,
             'subject_description' => $request->subject_description,
+            'status' => $request->status,
         ]);
 
         if($request->section){
