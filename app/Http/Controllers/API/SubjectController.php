@@ -64,9 +64,12 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function deleteSubject($id)
+    public function deleteSubject(Request $request)
     {
-        Subject::destroy($id);
+        foreach($request->ids as $id){
+            $subject = Subject::find($id);
+            $subject->delete();
+        }
         return response()->json([
             'message' => 'Subject has been successfully deleted!'
         ]);

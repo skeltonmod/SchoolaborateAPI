@@ -40,7 +40,6 @@ use App\Models\Subject;
 // Route::post('/register', [RegisterController::class, 'register']);
 
 Route::post('/chat', [ChatController::class, 'sendMessage']);
-
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/auth/user', [ProfileController::class, 'getAuthenticatedUser']);
     Route::post('/auth/user/update', [ProfileController::class, 'updateAuthenticatedUser']);
@@ -58,10 +57,12 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/announcement', [AnnouncementController::class, 'storeAnnouncement']);
     Route::get('/announcement/search/{title}', [AnnouncementController::class, 'searchAnnouncement']);
     
+    Route::get('/subject/{id}', [SubjectController::class, 'showSubjectDetails']);
+    Route::post('/subject/delete/multiple', [SubjectController::class, 'deleteSubject']);
     Route::get('/subject', [SubjectController::class, 'getSubjectlist']);
     Route::post('/subject', [SubjectController::class, 'storeSubject']);
-    Route::get('/subject/{id}', [SubjectController::class, 'showSubjectDetails']);
-    Route::delete('/subject/{id}', [SubjectController::class, 'deleteSubject']);
+    
+    
     Route::get('/subject/search/{subject}', [SubjectController::class, 'searchSubject']);
     Route::post('/update_subject/{id}', [SubjectController::class, 'updateSubject']);
     
