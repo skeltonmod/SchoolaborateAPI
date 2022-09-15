@@ -5,16 +5,28 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SchoolLevel;
-
+use Carbon\Carbon;
 
 class SchoolLevelController extends Controller
 {
     public function getSchoolLevelList()
     {
         $data = SchoolLevel::all();
+        $response = [];
+
+        foreach ($data as $schoolLevel) {
+            $response[] = [
+                'id' => $schoolLevel->id,
+                'name' => $schoolLevel->name,
+                'created_at' => Carbon::parse($schoolLevel->created_at)->format('F d Y'),
+                // 'description' => $schoolLevel->description,
+                'status' => $schoolLevel->status,
+            ];
+        }
+
 
         return response()->json([
-            'data' => $data
+            'data' => $response
         ]);
     }
 

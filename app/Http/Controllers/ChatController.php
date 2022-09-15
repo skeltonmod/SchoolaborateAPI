@@ -9,7 +9,7 @@ class ChatController extends Controller
 {
     //
     public function sendMessage(Request $request){
-        event(new ChatEvent([
+        return event(new ChatEvent([
             'content' => $request->message,
             'sender' => 'User 1',
             'time' => $request->time,

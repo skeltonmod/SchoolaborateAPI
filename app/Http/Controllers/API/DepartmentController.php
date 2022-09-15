@@ -12,9 +12,19 @@ class DepartmentController extends Controller
     public function getDepartmentList()
     {
         $data = Department::all();
+        $response = [];
+
+        foreach ($data as $department) {
+            $response[] = [
+                'id' => $department->id,
+                'name' => $department->department_name,
+                'status' => $department->status,
+                'created_at' => $department->created_at->format('F d Y'),
+            ];
+        }
 
         return response()->json([
-            'data' => $data
+            'data' => $response
         ]);
     }
 
@@ -25,7 +35,7 @@ class DepartmentController extends Controller
         return response()->json([
             'message' => 'Successfully saved!'
         ]);
-    } 
+    }
     
     public function showDepartmentDetails($id)
     {
@@ -34,6 +44,7 @@ class DepartmentController extends Controller
             'id'=> $department->id,
             'department_name' => $department->department_name,
             'status' => $department->status,
+            'created_at' => $department->created_at,
         ];
 
         return response()->json($response);

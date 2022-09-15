@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Subject;
 use App\Http\Requests\SubjectRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SubjectController extends Controller
@@ -23,6 +24,7 @@ class SubjectController extends Controller
                 'subject_description' => $subject->subject_description,
                 'status' => $subject->status,
                 'section' => $subject->section()->get()->pluck('id')->first(),
+                'created_at' => Carbon::parse($subject->created_at)->format('F d Y'),
             ];
         }
 
@@ -96,6 +98,8 @@ class SubjectController extends Controller
         $subject = Subject::where('id', $id)->get()->first();
         $subject->subject_name = $request->subject_name ?? $subject->subject_name;
         $subject->subject_description = $request->subject_description ?? $subject->subject_description;
+        $subject->status = $request->status ?? $subject->status;
+
         $subject->save();
 
         if($request->section){
